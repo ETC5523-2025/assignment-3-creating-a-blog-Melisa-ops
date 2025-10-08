@@ -1,4 +1,26 @@
-/* css styles */
-.navbar-dark, .quarto-title-banner {
-  background-color: #006DAE;
+/* -------- LIGHT: teal frame, light-gray navbar, white content -------- */
+html[data-bs-theme="light"]{background:#AEE6E9!important;color:#1F2937}
+html[data-bs-theme="light"] body{background:transparent!important;color:inherit;line-height:1.65}
+html[data-bs-theme="light"] .navbar{background:#E5E7EB!important;border-bottom:1px solid #D1D5DB}
+html[data-bs-theme="light"] .navbar .navbar-brand,
+html[data-bs-theme="light"] .navbar .nav-link{color:#1F2937!important}
+html[data-bs-theme="light"] #quarto-content{background:transparent!important;padding:24px 0}
+html[data-bs-theme="light"] #quarto-content main.content{
+  background:#fff!important;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.06);
+  max-width:1100px;margin:0 auto;padding:1rem 1.25rem
 }
+
+/* -------- DARK: navy background, black navbar, white text -------- */
+html[data-bs-theme="dark"]{background:#0A2342!important;color:#fff}
+html[data-bs-theme="dark"] body{background:transparent!important;color:inherit;line-height:1.65}
+html[data-bs-theme="dark"] .navbar{background:#000!important;border-bottom:1px solid #1F2A44}
+html[data-bs-theme="dark"] .navbar .navbar-brand,
+html[data-bs-theme="dark"] .navbar .nav-link{color:#fff!important}
+html[data-bs-theme="dark"] #quarto-content,
+html[data-bs-theme="dark"] #quarto-content main.content{background:transparent!important;box-shadow:none;border-radius:0}
+
+/* Make light-mode headings distinctly teal */
+html[data-bs-theme="light"] h1,
+html[data-bs-theme="light"] h2,
+html[data-bs-theme="light"] h3 { color:#0B7E8A !important; }
+
