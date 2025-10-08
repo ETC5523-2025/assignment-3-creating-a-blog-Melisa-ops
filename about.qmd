@@ -1,13 +1,30 @@
 ---
 title: "About"
-image: profile.jpg
 about:
   template: jolla
+  image: "img/melisa.jpg"     # ← path yang benar
+  image-alt: "Portrait of Melisa"
+  image-shape: rectangle      # circle | rounded | rectangle
+  image-width: 220px
   links:
     - icon: github
-      text: Github
-      href: https://github.com/etc5523-2022
-
+      text: GitHub
+      href: https://github.com/Melisa-ops
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/melisa-isnamel-439a3769/
+    - icon: envelope
+      text: Email
+      href: mailto:meli0013@student.monash.edu
 ---
 
-This is a blog template for the ETC5523 Communicating with Data assessment at Monash University.
+```{r}
+#| echo: false
+#| results: asis
+cat("
+Hi, I’m Melisa. I’m an international student from Indonesia studying a **Master of Health Data Analytics** at Monash University. I hold a bachelor’s degree in Statistics and enjoy turning data into clear, practical stories through analysis and visualisation. I’ve built strengths in applied healthcare analytics through real case studies that connect data with clinical and healthcare questions.
+
+In ETC5523: Communicating with Data, I’ve developed not only stronger analytical practice but also the ability to present results that stakeholders can understand and use—through clear writing, visual storytelling, and interactive web reports. I’m motivated by the belief that good analysis should inform action, and I enjoy turning numbers into insights that support decision-making.
+
+")
+```
