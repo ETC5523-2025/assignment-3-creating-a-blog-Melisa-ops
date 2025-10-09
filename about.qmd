@@ -2,7 +2,7 @@
 title: "About"
 about:
   template: jolla
-  image: "img/melisa.jpg"     # ← path yang benar
+  image: "img/melisa.jpg"     
   image-alt: "Portrait of Melisa"
   image-shape: rectangle      # circle | rounded | rectangle
   image-width: 220px
@@ -24,7 +24,7 @@ about:
 cat("
 Hi, I’m Melisa. I’m an international student from Indonesia studying a **Master of Health Data Analytics** at Monash University. I hold a bachelor’s degree in Statistics and enjoy turning data into clear, practical stories through analysis and visualisation. I’ve built strengths in applied healthcare analytics through real case studies that connect data with clinical and healthcare questions.
 
-In ETC5523: Communicating with Data, I’ve developed not only stronger analytical practice but also the ability to present results that stakeholders can understand and use—through clear writing, visual storytelling, and interactive web reports. I’m motivated by the belief that good analysis should inform action, and I enjoy turning numbers into insights that support decision-making.
+In ETC5523: Communicating with Data, I’ve developed not only stronger analytical practice but also the ability to present results that stakeholders can understand and use through clear writing, visual storytelling, and interactive web reports. I’m motivated by the belief that good analysis should inform action, and I enjoy turning numbers into insights that support decision-making.
 
 ")
 ```

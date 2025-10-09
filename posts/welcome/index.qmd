@@ -1,12 +1,133 @@
 ---
-title: "Welcome To My Blog Template"
-author: "Emi Tanaka"
-date: "2022-07-18"
-categories: [news]
+title: "Vaccination + Quarantine: Delaying Delta Outbreaks"
+date: 2025-10-09
+author: "Melisa"
+description: How vaccine efficacy and coverage, with quarantine, delay community outbreaks.
+categories: [health, vaccination, quarantine]
+title-block-banner: true
+bibliography: refs.bib      
+link-citations: true
 ---
 
-This is the first post in a Quarto blog. Welcome!
+## Problem description
 
-![](thumbnail.jpg)
+
+Under the Delta variant, how do **vaccine efficacy (VE)** and **coverage**, alongside border quarantine, change the risk and timing of a community outbreak? Drawing on Zachreson et al. (2022) [@zachreson2022], I seek practical thresholds that keep breach risk near baseline and extend the time to 50% outbreak probability (*t*₅₀). **Policy relevance:** *t*₅₀ indicates how long health systems can delay sustained community transmission, guiding vaccine targeting, quarantine settings, and surge preparedness.
+
+The modelling baseline was calibrated to pre-Delta data from Australia and New Zealand, scenarios then examined Delta-era transmissibility (**R₀** ≈ 6, explored **5–10**) and VE in the 0.5–0.9 range.
+
+
+
+
+## Analysis
+
+All results and parameter settings in this section are adapted from Zachreson et al. (2022) [@zachreson2022], with some minor modifications by the author.
+
+
+### 1) Breach risk within quarantine
+- Risk scales with transmissibility (R₀) and falls with higher VE. From the pre-Delta baseline (R₀ = 3, VE = 0), holding breach risk near baseline under Delta-era settings requires:
+  - VE ≥ 60% at R₀ = 6 
+  - VE ≥ 70% at R₀ = 8 
+  - VE ~70–80% at R₀ = 10 (a “saturation” effect appears because travellers are cohorted, if infection control outside close contacts slips, risk rises sharply).
+- Facility controls are pivotal. Relaxing traveller↔traveller/worker contact reductions by an Order-of-magnitude can increase breach risk by up to two orders of magnitude, overwhelming moderate VE gains.
+
+### 2) Community outbreak timing (*t*₅₀)
+- Non-linear gains with VE × coverage. At VE < 60%, even full coverage gives limited protection. Once VE ≥ 80%, *t*₅₀ rises steeply as coverage passes ~80% (see Figure @fig-delta).
+- Order-of-magnitude delay is achievable. Compared with baseline ~15 days (R₀ = 3, VE = 0), an optimal mix—e.g., VE ≈ 90% with coverage ≥ 80% at R₀ = 6–10 can extend *t*₅₀ to ~1000 days.
+
+
+The following ** @fig-delta** and **@tbl-ve-thresholds** visualise and quantify these threshold effects.
+
+```{r}
+#| echo: false
+#| label: fig-delta
+#| fig-cap: "Across R₀ = 5–10, t₅₀ increases non-linearly with VE × coverage. Below VE ≈ 60%, gains are modest even at full coverage. In contrast, VE ≥ 80% combined with coverage ≳ 80% produces threshold jumps that extend outbreak-free time from weeks (~15 days baseline) to months–years (~1000 days). High coverage cannot compensate for low VE as transmissibility increases."
+#| fig-alt: "Six panels (R₀ = 5–10). For each VE (0.5–0.9), t₅₀ increases with coverage, VE = 0.9 rises steeply near high coverage. Baseline line stays low."
+#| out-width: 100%
+
+knitr::include_graphics("../../img/fig_delta_t50.png")
+
+```
+
+
+
+```{r}
+#| echo: false
+#| label: tbl-ve-thresholds
+#| tbl-cap: "The table synthesizes scenario results, showing that moving from VE 80% (coverage 60%) to VE 90% (coverage 80%) shifts t₅₀ from ~320 to ~1000 days, whereas VE 50% even at 80% coverage yields only ~35 days. This illustrates how higher VE and coverage jointly drive a disproportionate reduction in outbreak risk."
+#| tbl-cap-location: bottom
+#| warning: false
+#| message: false
+
+library(dplyr)
+library(tibble)
+library(gt)
+
+summary_table <- tribble(
+  ~Scenario,                          ~R0, ~VE_percent, ~Coverage_percent, ~t50_days, ~Risk_Change_vs_Baseline, ~Interpretation,
+  "Baseline (no vaccine)",              3,   0,   0,    15,   "–",
+  "Pre-Delta reference with high breach risk and rapid outbreak.",
+  
+  "High efficacy, moderate coverage",   6,  80,  60,   320,   "↓ 80%",
+  "Moderate coverage + high VE substantially extends t₅₀.",
+  
+  "High efficacy, high coverage",       8,  90,  80,  1000,   "↓ 95%",
+  "Very high VE + coverage delays outbreaks for years.",
+  
+  "Low efficacy, high coverage",        8,  50,  80,    35,   "↓ 20%",
+  "Coverage alone insufficient when VE is low under high transmissibility."
+)
+
+gt_summary <- summary_table %>%
+  gt() %>%
+  cols_label(
+    Scenario = "Scenario",
+    R0 = md("R₀"),
+    VE_percent = "VE (%)",
+    Coverage_percent = "Coverage (%)",
+    t50_days = md("t₅₀ (days)"),
+    Risk_Change_vs_Baseline = "Risk vs Baseline",
+    Interpretation = "Interpretation"
+  ) %>%
+  fmt_number(columns = c(R0, VE_percent, Coverage_percent, t50_days), decimals = 0) %>%
+  tab_style(style = cell_text(weight = "bold"),
+            locations = cells_column_labels(everything())) %>%
+  opt_table_outline() %>%
+  tab_source_note(md("t₅₀ = time to 50% outbreak probability. Data patterns adapted from Zachreson et al. (2022), *Science Advances*."))
+
+gt_summary
+```
+
+
+### 3) Practical thresholds 
+To keep breach risk ~baseline as R₀ rises: target VE ≥ 60% (R₀ = 6), VE ≥ 70% (R₀ = 8), for R₀ ≈ 10, plan for ~70–80% VE plus strict facility controls.
+To materially extend t₅₀: aim for VE ≥ 80% and coverage ≥ 80%, the largest marginal gain is 80% → 90% VE at high coverage.
+Quarantine ≠ substitute for community protection. It buys time only if paired with mass vaccination and tight infection control.
+
+
+
+### 4) Robustness (sensitivity highlights)
+Shorter incubation (Delta like) improves detection dynamics → longer t₅₀.
+If VE acts mainly via reduced infectiousness (VT) (vs. infection blocking, VI), the VE threshold drops by ~20% to maintain baseline risk.
+Lower symptomatic fraction increases hidden spread, shrinking t₅₀, but leaves the approximate VE thresholds above unchanged.
+
+
+
+## Conclusion
+This analysis highlights how vaccine efficacy (VE), coverage, and border quarantine measures jointly shape the risk and timing of COVID-19 community outbreaks under the Delta variant. Based on the modelling work by Zachreson et al. (2022) [@zachreson2022], the key implication is that border quarantine alone is insufficient to maintain low outbreak risk in high transmissibility settings.
+
+Maintaining baseline breach risk requires higher VE thresholds as R₀ increases, with strict facility infection control remaining essential. High VE (≥80%) combined with broad population coverage (≥80%) can delay outbreaks by an Order-of-magnitude compared with pre-Delta baselines, while weaker vaccination strategies offer only marginal protection.
+
+These findings reinforce that border quarantine should be viewed as a complementary and time buying measure, not a standalone solution. Sustained outbreak prevention depends on pairing quarantine controls with strong vaccination programs, enabling jurisdictions with low local transmission to keep risk near baseline and extend outbreak free periods.
+
+
+
+
+
+
+
+
+
+
 
 
